@@ -8,7 +8,7 @@ import logging
 from datetime import datetime
 
 # App Insights
-# TODO: Import required libraries for App Insights
+# TODO: Import required libraries for App Insights new changes check
 
 # Logging
 logger = # TODO: Setup logger
