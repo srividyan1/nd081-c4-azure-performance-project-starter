@@ -21,19 +21,19 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 logger = logging.getLogger(__name__)
 
 logger.addHandler(AzureLogHandler(
-    connection_string='InstrumentationKey=e9458135-22b2-455b-a701-3a888a8b6c70')
+    connection_string='InstrumentationKey=b6667ab8-40fb-4b94-a8f5-718bf77f2d44')
 )
 
 
 # Metrics
 exporter = metrics_exporter.new_metrics_exporter(
   enable_standard_metrics=True,
-  connection_string='InstrumentationKey=e9458135-22b2-455b-a701-3a888a8b6c70')
+  connection_string='InstrumentationKey=b6667ab8-40fb-4b94-a8f5-718bf77f2d44')
 
 # Tracing
 tracer = Tracer(
     exporter=AzureExporter(
-        connection_string='InstrumentationKey=e9458135-22b2-455b-a701-3a888a8b6c70'),
+        connection_string='InstrumentationKey=b6667ab8-40fb-4b94-a8f5-718bf77f2d44'),
     sampler=ProbabilitySampler(1.0),
 )
 
@@ -42,9 +42,10 @@ app = Flask(__name__)
 # Requests
 middleware = FlaskMiddleware(
     app,
-    exporter=AzureExporter(connection_string="InstrumentationKey=e9458135-22b2-455b-a701-3a888a8b6c70"),
+    exporter=AzureExporter(connection_string="InstrumentationKey=b6667ab8-40fb-4b94-a8f5-718bf77f2d44"),
     sampler=ProbabilitySampler(rate=1.0),
 )
+
 
 # Load configurations from environment or config file
 app.config.from_pyfile('config_file.cfg')
@@ -114,11 +115,9 @@ def index():
 
             # Get current values
             vote1 = r.get(button1).decode('utf-8')
-            logger.setLevel(logging.INFO)
-            logger.info('Dogs')
+            logger.warning('Cats is Clicked')
             vote2 = r.get(button2).decode('utf-8')
-            logger.setLevel(logging.INFO)
-            logger.info('Cats')
+            logger.warning('Dogs is Clicked')
 
             # Return results
             return render_template("index.html", value1=int(vote1), value2=int(vote2), button1=button1, button2=button2, title=title)
